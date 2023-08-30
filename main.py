@@ -54,10 +54,6 @@ def algos(chosenalgorithm,enque,admissibleh,pathdict,runtrue):
         else:
             pathdict['beamlist'].sort(key=lambda x: dist_finder(x[0][-1],chosengoal))
 
-            for i in pathdict['beamlist'][:4]:
-                print(i,dist_finder(i[0][-1],chosengoal))
-            print("")
-
             for i in range(min(betaval-1,len(pathdict['beamlist'])-1)):
                 pathdict['queue'].appendleft(pathdict['beamlist'][i+1])
             expand=pathdict['beamlist'][0]
@@ -86,7 +82,7 @@ def algos(chosenalgorithm,enque,admissibleh,pathdict,runtrue):
             if chosenalgorithm == 'Beam': 
                 pathdict['beamlist'].append(newnode)
             else:
-                pathdict['queue'].append(newnode)
+                pathdict['queue'].appendleft(newnode)
             pathdict['enqueuings']+=1
     if enque:
         pathdict['enquedlist'][expandnode] = None 
