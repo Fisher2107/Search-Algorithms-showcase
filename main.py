@@ -135,15 +135,11 @@ class Button:
         self.draw()
             
     def check_click(self):
-        global collapsealgo
-        global collapsespeed
-        global chosenalgorithm
-        global chosenspeed
-        global choosingstart
-        global choosinggoal
-        global run
-        global pause
-        global stop
+        global collapsealgo,collapsespeed
+        global chosenalgorithm,chosenspeed
+        global choosingstart,choosinggoal
+        global run,pause,stop
+
         mouse_pos = pygame.mouse.get_pos()
         if self.top_rect.collidepoint(mouse_pos):
             self.top_color = '#D74B4B'
@@ -151,31 +147,31 @@ class Button:
                 self.dynamic_elecation = 0
                 self.pressed = True
             else:
-                    self.dynamic_elecation = self.elevation
-                    if self.pressed == True:
-                        if self.group == 'algo' or self.group == 'algosub':
-                            collapsealgo = not collapsealgo
-                            if self.group == 'algosub':
-                                chosenalgorithm = self.text
-                        elif self.group == 'speed' or self.group == 'speedsub':
-                            collapsespeed = not collapsespeed
-                            if self.group == 'speedsub':
-                                chosenspeed = self.text
-                        elif self.group == 'select':
-                            if self.text == 'Set Start':
-                                choosingstart = True
-                            else: 
-                                choosinggoal = True
-                        else:  #self.group = 'run'
-                            if self.text == 'RUN' and not runtrue:
-                                run = True
-                            elif runtrue and self.text == 'Pause':
-                                pause = True
-                            elif runtrue and self.text == 'Stop':
-                                stop = True
-                            elif runtrue and self.text == 'Resume':
-                                pause = False
-                        self.pressed = False
+                self.dynamic_elecation = self.elevation
+                if self.pressed == True:
+                    if self.group == 'algo' or self.group == 'algosub':
+                        collapsealgo = not collapsealgo
+                        if self.group == 'algosub':
+                            chosenalgorithm = self.text
+                    elif self.group == 'speed' or self.group == 'speedsub':
+                        collapsespeed = not collapsespeed
+                        if self.group == 'speedsub':
+                            chosenspeed = self.text
+                    elif self.group == 'select':
+                        if self.text == 'Set Start':
+                            choosingstart = True
+                        else: 
+                            choosinggoal = True
+                    else:  #self.group = 'run'
+                        if self.text == 'RUN' and not runtrue:
+                            run = True
+                        elif runtrue and self.text == 'Pause':
+                            pause = True
+                        elif runtrue and self.text == 'Stop':
+                            stop = True
+                        elif runtrue and self.text == 'Resume':
+                            pause = False
+                    self.pressed = False
                     
         else:
             self.dynamic_elecation = self.elevation
@@ -348,13 +344,13 @@ async def main():
             redstartrect = pygame.draw.rect(screen,'green',mousestart,border_radius=2)
             starttextrect = starttextsurf.get_rect(center = redstartrect.center)
             screen.blit(starttextsurf, starttextrect)
-            pygame.draw.circle(screen,'blue',redstartrect.midbottom,4)
+            pygame.draw.circle(screen,'blue',redstartrect.midbottom,7)
             
         if choosingstart:
             mousestart = pygame.Rect((0,0),(55,30))
             mousestart.midbottom = mouse_pos
             drawstart()
-            if pygame.mouse.get_pressed()[0]: 
+            if pygame.mouse.get_pressed()[0] and not runtrue: 
                 clicked = True
             else:
                 if clicked:
@@ -371,14 +367,14 @@ async def main():
         if chosenstart:
             drawstart()
             if math.sqrt(((scrubslinkstransform[chosenstart][1][0]-mouse_pos[0])**2)+((scrubslinkstransform[chosenstart][1][1]-mouse_pos[1])**2)) <= 5:
-                if pygame.mouse.get_pressed()[0]:
+                if pygame.mouse.get_pressed()[0] and not runtrue:
                     choosingstart = True
             
         def drawgoal():
             redgoalrect = pygame.draw.rect(screen,'red',mousegoal,border_radius=2)
             goaltextrect = goaltextsurf.get_rect(center = redgoalrect.center)
             screen.blit(goaltextsurf, goaltextrect)
-            pygame.draw.circle(screen,'blue',redgoalrect.midbottom,4)
+            pygame.draw.circle(screen,'blue',redgoalrect.midbottom,7)
             
         if choosinggoal:
             mousegoal = pygame.Rect((0,0),(55,30))
@@ -401,7 +397,7 @@ async def main():
         if chosengoal:
             drawgoal()
             if math.sqrt(((scrubslinkstransform[chosengoal][1][0]-mouse_pos[0])**2)+((scrubslinkstransform[chosengoal][1][1]-mouse_pos[1])**2)) <= 5:
-                if pygame.mouse.get_pressed()[0]:
+                if pygame.mouse.get_pressed()[0] and not runtrue:
                     choosinggoal = True
         #run
         buttonrun.draw()
