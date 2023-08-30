@@ -66,7 +66,7 @@ def algos(chosenalgorithm,enque,admissibleh,pathdict,runtrue):
     elif chosenalgorithm == 'Breadth first':
             expand=pathdict['queue'].pop()
 
-    elif chosenalgorithm == 'Depthfirst':
+    elif chosenalgorithm == 'Depth first':
         expand=pathdict['queue'].popleft()
     else:
         raise Exception('not listed seach algo selected somehow')
@@ -206,7 +206,7 @@ screen.fill(screen_color)
 
 #grouptypes = ('algo','algosub','speed','speedsub','run','select')
 #algo buttons
-algonames=('Breadth first','Depthfirst','Hillclimb','Beam','Branch and Bound','A*')
+algonames=('Breadth first','Depth first','Hillclimb','Beam','Branch and Bound','A*')
 
 buttonalgoselect = Button('Select search algorithm:',320,40,(0,5),5,'algo')
 button1 = Button(algonames[0],320,30,(0,47),2,'algosub')
